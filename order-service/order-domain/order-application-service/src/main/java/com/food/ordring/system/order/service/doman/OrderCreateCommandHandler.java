@@ -8,6 +8,7 @@ import com.food.ordering.system.order.domain.exception.OrderDomainException;
 import com.food.ordring.system.order.service.doman.dto.create.CreateOrderCommand;
 import com.food.ordring.system.order.service.doman.dto.create.CreateOrderResponse;
 import com.food.ordring.system.order.service.doman.mapper.OrderDataMapper;
+import com.food.ordring.system.order.service.doman.ports.output.message.publisher.payment.OrderCreatedPublisher;
 import com.food.ordring.system.order.service.doman.ports.output.repository.CustomerRepository;
 import com.food.ordring.system.order.service.doman.ports.output.repository.OrderRepository;
 import com.food.ordring.system.order.service.doman.ports.output.repository.RestaurantRepository;
@@ -24,50 +25,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class OrderCreateCommandHandler {
 
-
-    private final OrderDomainService orderDomainService;
-
-    private final OrderRepository orderRepository;
-
-    private final CustomerRepository customerRepository;
-
-    private final RestaurantRepository restaurantRepository;
-
+    private final OrderCreateHelper orderCreateHelper;
     private final OrderDataMapper orderDataMapper;
+    private final OrderCreatedPublisher orderCreatedPublisher;
 
-    @Transactional
     public CreateOrderResponse createOrder(CreateOrderCommand createOrderCommand) {
-        checkCustomer(createOrderCommand.getCustomerId());
-        Restaurant restaurant = checkRestaurant(createOrderCommand);
-        Order order = orderDataMapper.ceateOrderCommandToOrder(createOrderCommand);
-        OrderCreatedEvent orderCreatedEvent = orderDomainService.validateAndInitiateOrder(order, restaurant);
-       Order newOorder = saveOrder(order);
-
-        log.info("Order is created with id: {}", newOorder.getId().getValue());
-        return orderDataMapper.orderToCreateOrderResponse(newOorder);
-    }
-
-    private Restaurant checkRestaurant(CreateOrderCommand createOrderCommand) {
-        Restaurant restaurant = orderDataMapper.createOrderCommandToRestaurant(createOrderCommand);
-
-        return restaurantRepository
-                .findRestaurantInformation(restaurant)
-                .orElseThrow(() -> new OrderDomainException("Could not find restaurant with id: " + restaurant.getId()));
-
-
-    }
-
-    private void checkCustomer(UUID customerId) {
-        customerRepository.findByCustomerId(customerId)
-                .orElseThrow(() -> new OrderDomainException("Could not find customer with id: " + customerId));
-    }
-
-    private Order saveOrder(Order order) {
-        Order newOrder = orderRepository.save(order);
-
-        log.info("Order is saved with id: {}", newOrder.getId());
-
-        return newOrder;
+        OrderCreatedEvent orderCreatedEvent = orderCreateHelper.saveOrder(createOrderCommand);
+        log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
+        orderCreatedPublisher.publish(orderCreatedEvent);
+        return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder());
     }
 
 
