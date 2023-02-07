@@ -14,9 +14,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>common-domain</module>
-    </modules>
-    <properties>
+        <module>common-application</module>
 
-    </properties>
+    </modules>
 
 </project>

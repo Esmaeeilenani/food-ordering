@@ -1,11 +1,15 @@
 package com.food.ordering.system.order.domain.entity;
 
-import com.food.ordering.system.domain.entity.BaseEntity;
-import com.food.ordering.system.domain.valueobject.Money;
-import com.food.ordering.system.domain.valueobject.ProductId;
+import com.food.ordering.system.entity.BaseEntity;
+import com.food.ordering.system.valueobject.Money;
+import com.food.ordering.system.valueobject.ProductId;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
+@Setter
+@Accessors(chain = true )
 public class Product extends BaseEntity<ProductId> {
     private String name;
     private Money price;

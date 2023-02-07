@@ -1,11 +1,10 @@
 package com.food.ordering.system.order.domain.entity;
 
-import com.food.ordering.system.domain.entity.BaseEntity;
-import com.food.ordering.system.domain.valueobject.Money;
-import com.food.ordering.system.domain.valueobject.OrderId;
+import com.food.ordering.system.entity.BaseEntity;
+import com.food.ordering.system.valueobject.Money;
+import com.food.ordering.system.valueobject.OrderId;
 import com.food.ordering.system.order.domain.valueobject.OrderItemId;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -62,7 +61,7 @@ public class OrderItem extends BaseEntity<OrderItemId> {
             return new Builder();
         }
 
-        public Builder orderId(OrderItemId val) {
+        public Builder id(OrderItemId val) {
             id = val;
             return this;
         }

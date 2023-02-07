@@ -1,10 +1,10 @@
 package com.food.ordering.system.order.domain.entity;
 
-import com.food.ordering.system.domain.entity.AggregateRoot;
-import com.food.ordering.system.domain.valueobject.*;
+import com.food.ordering.system.entity.AggregateRoot;
 import com.food.ordering.system.order.domain.exception.OrderDomainException;
 import com.food.ordering.system.order.domain.valueobject.StreetAddress;
 import com.food.ordering.system.order.domain.valueobject.TrackingId;
+import com.food.ordering.system.valueobject.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

@@ -1,7 +1,7 @@
 package com.food.ordering.system.order.domain.entity;
 
-import com.food.ordering.system.domain.entity.AggregateRoot;
-import com.food.ordering.system.domain.valueobject.RestaurantId;
+import com.food.ordering.system.entity.AggregateRoot;
+import com.food.ordering.system.valueobject.RestaurantId;
 import lombok.Getter;
 import lombok.Setter;
 

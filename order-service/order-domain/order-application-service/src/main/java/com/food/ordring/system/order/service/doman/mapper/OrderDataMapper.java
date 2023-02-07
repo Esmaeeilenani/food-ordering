@@ -1,9 +1,9 @@
 package com.food.ordring.system.order.service.doman.mapper;
 
-import com.food.ordering.system.domain.valueobject.CustomerId;
-import com.food.ordering.system.domain.valueobject.Money;
-import com.food.ordering.system.domain.valueobject.ProductId;
-import com.food.ordering.system.domain.valueobject.RestaurantId;
+import com.food.ordering.system.valueobject.CustomerId;
+import com.food.ordering.system.valueobject.Money;
+import com.food.ordering.system.valueobject.ProductId;
+import com.food.ordering.system.valueobject.RestaurantId;
 import com.food.ordering.system.order.domain.entity.Order;
 import com.food.ordering.system.order.domain.entity.OrderItem;
 import com.food.ordering.system.order.domain.entity.Product;
@@ -12,6 +12,7 @@ import com.food.ordering.system.order.domain.valueobject.StreetAddress;
 import com.food.ordring.system.order.service.doman.dto.create.CreateOrderCommand;
 import com.food.ordring.system.order.service.doman.dto.create.CreateOrderResponse;
 import com.food.ordring.system.order.service.doman.dto.create.OrderAddress;
+import com.food.ordring.system.order.service.doman.dto.track.TrackOrderResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -69,10 +70,20 @@ public class OrderDataMapper {
     }
 
 
-    public CreateOrderResponse orderToCreateOrderResponse(Order order) {
+    public CreateOrderResponse orderToCreateOrderResponse(Order order, String message) {
         return CreateOrderResponse.builder()
                 .orderTrackingId(order.getTrackingId().getId())
                 .orderStatus(order.getStatus())
+                .message(message)
                 .build();
     }
+
+    public TrackOrderResponse orderToTrackOrderResponse(Order order, String message) {
+        return TrackOrderResponse.builder()
+                .orderTrackingId(order.getTrackingId().getId())
+                .orderStatus(order.getStatus())
+                .message(message)
+                .build();
+    }
+
 }

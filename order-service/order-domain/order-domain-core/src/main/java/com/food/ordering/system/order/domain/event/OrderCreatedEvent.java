@@ -1,8 +1,6 @@
 package com.food.ordering.system.order.domain.event;
 
-import com.food.ordering.system.domain.event.DomainEvent;
 import com.food.ordering.system.order.domain.entity.Order;
-import lombok.Getter;
 
 import java.time.ZonedDateTime;
 

@@ -1,24 +1,13 @@
 package com.food.ordring.system.order.service.doman;
 
-import com.food.ordering.system.order.domain.OrderDomainService;
-import com.food.ordering.system.order.domain.entity.Order;
-import com.food.ordering.system.order.domain.entity.Restaurant;
 import com.food.ordering.system.order.domain.event.OrderCreatedEvent;
-import com.food.ordering.system.order.domain.exception.OrderDomainException;
 import com.food.ordring.system.order.service.doman.dto.create.CreateOrderCommand;
 import com.food.ordring.system.order.service.doman.dto.create.CreateOrderResponse;
 import com.food.ordring.system.order.service.doman.mapper.OrderDataMapper;
 import com.food.ordring.system.order.service.doman.ports.output.message.publisher.payment.OrderCreatedPublisher;
-import com.food.ordring.system.order.service.doman.ports.output.repository.CustomerRepository;
-import com.food.ordring.system.order.service.doman.ports.output.repository.OrderRepository;
-import com.food.ordring.system.order.service.doman.ports.output.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-import java.util.UUID;
 
 @Component
 @Slf4j
@@ -33,7 +22,7 @@ public class OrderCreateCommandHandler {
         OrderCreatedEvent orderCreatedEvent = orderCreateHelper.saveOrder(createOrderCommand);
         log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
         orderCreatedPublisher.publish(orderCreatedEvent);
-        return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder());
+        return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder(),"Order created successfully");
     }
 
 

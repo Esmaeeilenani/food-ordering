@@ -60,9 +60,9 @@ public class OrderCreateHelper {
     private Order saveOrder(Order order) {
         Order newOrder = orderRepository.save(order);
 
-        log.info("Order is saved with id: {}", newOrder.getId());
+        log.info("Order is saved with id: {}", order.getId());
 
-        return newOrder;
+        return order;
     }
 
 
