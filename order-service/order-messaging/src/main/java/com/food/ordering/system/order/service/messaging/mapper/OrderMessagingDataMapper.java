@@ -5,6 +5,8 @@ import com.food.ordering.system.order.domain.entity.Order;
 import com.food.ordering.system.order.domain.event.OrderCancelledEvent;
 import com.food.ordering.system.order.domain.event.OrderCreatedEvent;
 import com.food.ordering.system.order.domain.event.OrderPaidEvent;
+import com.food.ordering.system.valueobject.PaymentStatus;
+import com.food.ordring.system.order.service.doman.dto.message.PaymentResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -65,6 +67,19 @@ public class OrderMessagingDataMapper {
                 .build();
 
 
+    }
+
+
+    public PaymentResponse paymentResponseAvroModelToPaymentResponse(PaymentResponseAvroModel paymentResponseAvroModel) {
+        return PaymentResponse.builder()
+                .id(paymentResponseAvroModel.getId())
+                .sagaId(paymentResponseAvroModel.getSagaId())
+                .paymentId(paymentResponseAvroModel.getPaymentId())
+                .customerId(paymentResponseAvroModel.getCustomerId())
+                .orderId(paymentResponseAvroModel.getOrderId())
+                .price(paymentResponseAvroModel.getPrice())
+                .paymentStatus(PaymentStatus.valueOf(paymentResponseAvroModel.getPaymentStatus().name()))
+                .build();
     }
 
 }
